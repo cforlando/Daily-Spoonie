@@ -1,11 +1,26 @@
 <template>
-  <div>
-    <h1 class="text-center">spoonie day</h1>
-    <h2 class="text-center">How many spoons do you have today?</h2>
-    <button class="col-sm" @click="incrementSpoons"><i class="fas fa-angle-up"></i></button>
-    <div class="col-sm">{{ spoons }}</div>
-    <button class="col-sm" @click="decrementSpoons"><i class="fas fa-angle-down"></i></button>
-    <button class="col-sm">Next</button>
+  <div class="init container-fluid">
+    <div class="row">
+        <div class="col ml-0 mr-0 pl-0 pr-0 header">
+            <div><img class="logo" src="../assets/dailyspoonielogo.svg"/></div>
+            
+        </div>
+    </div>
+    <div class="taglinewrapper row pt-4 pb-4">
+        <h2 class="tagline text-center">Get Chronically Productive</h2>
+    </div>
+    <div class="countwrapper row">
+        <div class="col">
+            <h3 class="countmessage pt-4 pb-4 text-center">How many spoons do you have today?</h3>
+            <button class="col-sm" @click="incrementSpoons"><i class="fas fa-angle-up"></i></button>
+            <div class="spoonCount text-center col-sm">{{ spoons }}</div>
+            <button class="col-sm" @click="decrementSpoons"><i class="fas fa-angle-down"></i></button>
+            <div class="text-center pt-4 pb-4">
+                <router-link class="text-center" to="/dashboard"><button class="nextbtn btn btn-primary">Next</button></router-link>
+            </div>
+        </div>
+    </div>
+    <div class="footer"></div>
   </div>
 </template>
 
@@ -23,14 +38,57 @@ export default {
       },
       decrementSpoons() {
           this.$store.commit('decrementSpoons');
+      },
+      pushToMain() {
+          this.$router.push('/user/dashboard');
       }
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style>
-    body {
-        background: #F2F2F2;
-    }
+<style scoped>
+.init {
+    background: #31C4F5;
+}
+
+.header {
+    position: relative;
+    height: 10rem;
+    width: 100%;
+    background: #169BD5;
+}
+.logo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.tagline {
+    font-size: 1.3rem;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+}
+
+.taglinewrapper {
+    background: #169BD5;
+}
+
+.countmessage {
+    color: white;
+}
+
+.spoonCount {
+    color: white;
+    font-size: 2rem;
+}
+
+.nextbtn {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.footer {
+    height: 12vh;
+}
 </style>
