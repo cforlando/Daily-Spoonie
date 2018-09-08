@@ -12,9 +12,9 @@
     <div class="countwrapper row">
         <div class="col">
             <h3 class="countmessage pt-4 pb-4 text-center">How many spoons do you have today?</h3>
-            <button class="col-sm" @click="incrementSpoons"><i class="fas fa-angle-up"></i></button>
+            <button class="incdec col-sm" @click="incrementSpoons"><i class="fas fa-angle-up"></i></button>
             <div class="spoonCount text-center col-sm">{{ spoons }}</div>
-            <button class="col-sm" @click="decrementSpoons"><i class="fas fa-angle-down"></i></button>
+            <button class="incdec col-sm" @click="decrementSpoons"><i class="fas fa-angle-down"></i></button>
             <div class="text-center pt-4 pb-4">
                 <router-link class="text-center" to="/dashboard"><button class="nextbtn btn btn-primary">Next</button></router-link>
             </div>
@@ -90,5 +90,12 @@ export default {
 
 .footer {
     height: 12vh;
+}
+
+.incdec {
+    border: 0;
+    background-color: #31C4F5;
+    color: white;
+    font-size: 3rem;
 }
 </style>
