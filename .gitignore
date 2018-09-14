@@ -19,3 +19,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+
+# The proper config file (leave only the dummy)
+/config/fbconfig.js
