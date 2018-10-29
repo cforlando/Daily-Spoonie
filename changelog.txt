@@ -1,0 +1,24 @@
+09/20/18
+--------
+
+Login input boxes have login functionality attached to Enter keypress (both username and password)
+
+10/07/18
+--------
+
+Login input boxes are now tied to Vuelidate and will reactively update as they're being typed
+into. The login button will not contact the Firebase server until the username/password meet
+the minimum criteria (valid email/email length >0 and password length > 0)
+
+10/08/18
+--------
+
+Login now redirects to main page and changes the login button to a logout button. The ability to
+sign out has also been implemented. Remaining issue is that the change in user authentication
+does not get reflected on the main page after logging out. Firebase has a function 
+`onAuthStateChanged` that could be useful, will try next.
+
+10/28/18
+--------
+
+Fixed login/logout, but ran into issue with Firebase and Vuex.

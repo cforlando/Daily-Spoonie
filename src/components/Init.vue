@@ -3,7 +3,6 @@
     <div class="row">
         <div class="col ml-0 mr-0 pl-0 pr-0 header">
             <div><img class="logo" src="../assets/dailyspoonielogo.svg"/></div>
-            
         </div>
     </div>
     <div class="taglinewrapper row pt-4 pb-4">
@@ -20,18 +19,42 @@
             </div>
         </div>
     </div>
-    <div class="footer"></div>
+    <div v-if="!userIsLoggedIn" class="footer">
+        <router-link to="/login"><button class="nextbtn btn btn-secondary">Login</button></router-link>
+    </div>
+    <div v-if="userIsLoggedIn" class="footer">
+        <button @click="logOut" class="nextbtn btn btn-secondary">Logout</button>
+    </div>
   </div>
 </template>
 
 <script>
+/* eslint-disable */
+import { Firebase } from "../config/fbconfig.js";
+
 export default {
   name: 'Init',
+  data: function() {
+     return {
+        userLogin: Firebase.auth().onAuthStateChanged(
+            (user) => {
+                if(user) {
+                    this.userLogin = Firebase.auth().currentUser;
+                } else {
+                    this.userLogin = false;
+                }
+            } 
+        )
+    }
+  },
   computed: {
     spoons() {
-        return this.$store.state.spoons
-    }  
-  },
+        return this.$store.state.spoons;
+    },
+    userIsLoggedIn() {
+        return this.$store.state.userLogin;
+    }
+  },    
   methods: {
       incrementSpoons() {
           this.$store.commit('incrementSpoons');
@@ -41,6 +64,23 @@ export default {
       },
       pushToMain() {
           this.$router.push('/user/dashboard');
+      },
+      logOut() {
+            Firebase.auth().signOut().then(
+                () => {
+                    Firebase.auth().onAuthStateChanged(
+                        (user) => {
+                            if(!user) {
+                                this.user=false;
+                                alert("You have successfully logged out.");
+                            }
+                        } 
+                    )
+                })
+            .catch(
+                (error) => {
+                    alert(error);
+                });
       }
   }
 }

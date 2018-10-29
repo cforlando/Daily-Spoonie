@@ -21,4 +21,4 @@ yarn-error.log*
 *.sw*
 
 # The proper config file (leave only the dummy)
-/config/fbconfig.js
+fbconfig.js

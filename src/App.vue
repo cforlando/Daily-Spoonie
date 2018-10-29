@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
   </div>
 </template>
 
@@ -17,6 +17,17 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 // end bootstrap
 
+// start Firebase
+import Firebase from 'firebase'
+import { config } from './config/fbconfig.js'
+
+Firebase.initializeApp(config);
+// end Firebase
+
+// vuex store
+import store from './store/store';
+// end store
+
 // start router
 import VueRouter from 'vue-router';
 import router from './router/router';
@@ -24,9 +35,17 @@ import router from './router/router';
 Vue.use(VueRouter);
 // end router
 
-// vuex store
-import store from './store/store';
-// end store
+// Vue Sanitize
+import VueSanitize from 'vue-sanitize';
+
+Vue.use(VueSanitize);
+// end Vue Sanitize
+
+//Vuelidate
+import Vuelidate from 'vuelidate';
+
+Vue.use(Vuelidate);
+// end Vuelidate
 
 export default {
   name: 'app',
