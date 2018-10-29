@@ -43,10 +43,9 @@
                     alert("No password present");
                 } else {
                     Firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-                        (user) => {
+                        () => {
+                            this.$store.dispatch('SET_USER');
                             alert("Excellent! You're logged in!");
-                            //eslint-disable-next-line
-                            console.log(user);
                             this.$router.push('/');
                         },
                         (err) => {

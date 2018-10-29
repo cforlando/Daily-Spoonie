@@ -22,3 +22,13 @@ does not get reflected on the main page after logging out. Firebase has a functi
 --------
 
 Fixed login/logout, but ran into issue with Firebase and Vuex.
+
+10/28/18
+--------
+
+Fixed Firebase/Vuex issue (correctly [as far as I know] utilized Vuex's dispatch/commit
+paradigm). Also corrected style issue of imports having code between them in App.vue, and moved
+the imports and set up calls into main.js. Login/Logout is now working, but login is not
+persistent on refresh. I suspect this is because the store gets reset upon refresh, and the
+state is set to null by default. Need to find a way to correctly set the store's value directly
+from Firebase upon reset.

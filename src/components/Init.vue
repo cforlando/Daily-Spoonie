@@ -19,10 +19,10 @@
             </div>
         </div>
     </div>
-    <div v-if="!userIsLoggedIn" class="footer">
+    <div v-if="!user" class="footer">
         <router-link to="/login"><button class="nextbtn btn btn-secondary">Login</button></router-link>
     </div>
-    <div v-if="userIsLoggedIn" class="footer">
+    <div v-if="user" class="footer">
         <button @click="logOut" class="nextbtn btn btn-secondary">Logout</button>
     </div>
   </div>
@@ -34,33 +34,20 @@ import { Firebase } from "../config/fbconfig.js";
 
 export default {
   name: 'Init',
-  data: function() {
-     return {
-        userLogin: Firebase.auth().onAuthStateChanged(
-            (user) => {
-                if(user) {
-                    this.userLogin = Firebase.auth().currentUser;
-                } else {
-                    this.userLogin = false;
-                }
-            } 
-        )
-    }
-  },
   computed: {
     spoons() {
-        return this.$store.state.spoons;
+        return this.$store.getters.getSpoons;
     },
-    userIsLoggedIn() {
-        return this.$store.state.userLogin;
+    user() {
+        return this.$store.getters.getUser;
     }
   },    
   methods: {
       incrementSpoons() {
-          this.$store.commit('incrementSpoons');
+          this.$store.dispatch('INCREMENT_SPOONS');
       },
       decrementSpoons() {
-          this.$store.commit('decrementSpoons');
+          this.$store.dispatch('DECREMENT_SPOONS');
       },
       pushToMain() {
           this.$router.push('/user/dashboard');
@@ -71,7 +58,7 @@ export default {
                     Firebase.auth().onAuthStateChanged(
                         (user) => {
                             if(!user) {
-                                this.user=false;
+                                this.$store.dispatch('SET_USER');
                                 alert("You have successfully logged out.");
                             }
                         } 

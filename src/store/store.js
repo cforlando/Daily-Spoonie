@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import { Firebase } from "../config/fbconfig.js";
+import Firebase from 'firebase';
 
 Vue.use(Vuex);
 
@@ -8,22 +8,36 @@ const store = new Vuex.Store({
     state: {
         spoons: 0,
         spoonsUsed: 3,
-        userLogin: Firebase.auth().onAuthStateChanged(
-            (user) => {
-                if(user) {
-                    this.userLogin = Firebase.auth().currentUser;
-                } else {
-                    this.userLogin = false;
-                }
-            } 
-        ),
+        user: null
+    },
+    getters: {
+        getUser: state => {
+            return state.user;
+        },
+        getSpoons: state => {
+            return state.spoons;
+        }
     },
     mutations: {
-        incrementSpoons (state) {
+        INCREMENT_SPOONS (state) {
             state.spoons++;
         },
-        decrementSpoons (state) {
+        DECREMENT_SPOONS (state) {
             state.spoons--;
+        },
+        SET_USER (state) {
+            state.user = Firebase.auth().currentUser;
+        }
+    },
+    actions: {
+        INCREMENT_SPOONS (context) {
+            context.commit('INCREMENT_SPOONS');
+        },
+        DECREMENT_SPOONS (context) {
+            context.commit('DECREMENT_SPOONS');
+        },
+        SET_USER (context) {
+            context.commit('SET_USER');
         }
     }
 })
