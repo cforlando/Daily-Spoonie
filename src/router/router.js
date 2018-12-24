@@ -24,7 +24,7 @@ const routes = [
         path: '/signup', 
         component: SignUp 
     },
-    { 
+    {
         path: '/user', 
         component: User,
         children: [
