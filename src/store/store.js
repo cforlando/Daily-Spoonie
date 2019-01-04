@@ -11,7 +11,8 @@ const store = new Vuex.Store({
         spoons: 0,
         spoonsUsed: 3,
         user: null,
-        userID: null
+        userID: null,
+        dayFlag: false
     },
     getters: {
         getUser: state => {
@@ -22,6 +23,12 @@ const store = new Vuex.Store({
         },
         getDisplayName: state => {
             return state.displayName;
+        },
+        getUserID: state => {
+            return state.userID;
+        },
+        getDayFlag: state => {
+            return state.dayFlag;
         }
     },
     mutations: {
@@ -35,11 +42,19 @@ const store = new Vuex.Store({
             state.user = Firebase.auth().currentUser;
         },
         SET_USER_ID() {
-            // eslint-disable-next-line
-            console.log(Firebase.auth().currentUser.uid); 
+            //state.userId = Firebase.auth().currentUser.uid; 
         },
         SET_DISPLAY_NAME(state, displayName) {
             state.displayName = displayName;
+        },
+        SET_DAY_FLAG(state, dayFlag) {
+            state.dayFlag = dayFlag;
+        },
+        LOG_OUT () {
+            Firebase.auth().signOut();
+        },
+        LOG_IN() {
+            // Firebase.auth().signInWithEmailAndPassword
         }
     },
     actions: {
@@ -57,6 +72,9 @@ const store = new Vuex.Store({
         },
         SET_DISPLAY_NAME (context) {
             context.commit('SET_DISPLAY_NAME');
+        },
+        LOG_OUT (context) {
+            context.commit('LOG_OUT');
         }
     }
 })
