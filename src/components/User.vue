@@ -1,6 +1,7 @@
 <template>
     <div class="user container-fluid px-0">
         <div class="links text-center row align-middle ml-0 mr-0">
+            <Config />
             <router-link to="/dashboard" class="col tab">
                 <div class="mt-2">
                     <i class="dashboard col fas fa-home"></i>
@@ -24,8 +25,13 @@
 </template>
 
 <script>
+import Config from './Config';
+
 export default {
-    name: "User"
+    name: "User",
+    components: {
+        Config
+    }
 }
 </script>
 
