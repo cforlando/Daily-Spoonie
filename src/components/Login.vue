@@ -22,7 +22,6 @@
 </template>
 
 <script>
-    import { Firebase } from '../config/fbconfig.js'
     import { required, email } from 'vuelidate/lib/validators'
 
     export default {
@@ -42,16 +41,7 @@
                 } else if(this.password.length <= 0) {
                     alert("No password present");
                 } else {
-                    Firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-                        () => {
-                            this.$store.dispatch('SET_USER');
-                            alert("Excellent! You're logged in!");
-                            this.$router.push('/');
-                        },
-                        (err) => {
-                            alert("Uh oh! " + err.message);
-                        }
-                    );
+                    this.$store.dispatch('LOG_IN', {email: this.email, password: this.password});
                 }
             }
         },
