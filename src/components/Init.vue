@@ -17,6 +17,7 @@
             <div class="text-center pt-4 pb-4">
                 <router-link class="text-center" to="/dashboard"><button class="nextbtn btn btn-primary">Next</button></router-link>
             </div>
+            <button @click="test"><i class="fas fa-stars"></i></button>
         </div>
     </div>
     <div v-if="!user" class="footer">
@@ -49,25 +50,14 @@ export default {
       decrementSpoons() {
           this.$store.dispatch('DECREMENT_SPOONS');
       },
+      test() {
+          this.$store.dispatch('SET_DISPLAY_NAME');
+      },
       pushToMain() {
           this.$router.push('/user/dashboard');
       },
       logOut() {
-            Firebase.auth().signOut().then(
-                () => {
-                    Firebase.auth().onAuthStateChanged(
-                        (user) => {
-                            if(!user) {
-                                this.$store.dispatch('SET_USER');
-                                alert("You have successfully logged out.");
-                            }
-                        } 
-                    )
-                })
-            .catch(
-                (error) => {
-                    alert(error);
-                });
+        this.$store.dispatch('LOG_OUT');
       }
   }
 }
