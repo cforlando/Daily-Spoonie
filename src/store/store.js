@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Firebase from 'firebase';
+import router from '../router/router';
+// import Admin from 'firebase-admin';
 
 Vue.use(Vuex);
 
@@ -51,10 +53,33 @@ const store = new Vuex.Store({
             state.dayFlag = dayFlag;
         },
         LOG_OUT () {
-            Firebase.auth().signOut();
+            Firebase.auth().signOut().then(
+                () => {
+                    Firebase.auth().onAuthStateChanged(
+                        (user) => {
+                            if(!user) {
+                                this.dispatch('SET_USER');
+                                alert("You have successfully logged out.");
+                            }
+                        } 
+                    )
+                })
+            .catch(
+                (error) => {
+                    alert(error);
+                });
         },
-        LOG_IN() {
-            // Firebase.auth().signInWithEmailAndPassword
+        LOG_IN(state, {email, password}) {
+            Firebase.auth().signInWithEmailAndPassword(email, password).then(
+                () => {
+                    this.dispatch('SET_USER');
+                    alert("Excellent! You're logged in!");
+                    router.push('/');
+                },
+                (err) => {
+                    alert("Uh oh! " + err.message);
+                }
+            );
         }
     },
     actions: {
@@ -71,10 +96,21 @@ const store = new Vuex.Store({
             context.commit('SET_USER_ID');
         },
         SET_DISPLAY_NAME (context) {
+            /* eslint-disable */
+            // let ref = Admin.database().ref().child("users");
+            // ref.on("value", (snapshot) => {
+            //     console.log(snapshot.val());
+            // }, (error) => {
+            //     console.log(error.code);
+            // });
+            // console.log(ref);
             context.commit('SET_DISPLAY_NAME');
         },
         LOG_OUT (context) {
             context.commit('LOG_OUT');
+        },
+        LOG_IN(context, {email, password}) {
+            context.commit('LOG_IN', {email, password});
         }
     }
 })
