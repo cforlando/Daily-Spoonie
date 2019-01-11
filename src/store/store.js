@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Firebase from 'firebase';
 import router from '../router/router';
-// import Admin from 'firebase-admin';
 
 Vue.use(Vuex);
 
@@ -60,6 +59,7 @@ const store = new Vuex.Store({
                             if(!user) {
                                 this.dispatch('SET_USER');
                                 alert("You have successfully logged out.");
+                                router.push('/');
                             }
                         } 
                     )
@@ -78,6 +78,17 @@ const store = new Vuex.Store({
                 },
                 (err) => {
                     alert("Uh oh! " + err.message);
+                }
+            );
+        },
+        SIGN_UP(state, {email, password}) {
+            Firebase.auth().createUserWithEmailAndPassword(email, password).then(
+                () => {
+                    alert("account created ");
+                    router.push('/');
+                },
+                (err) => {
+                    alert("there was an error " + err.message);
                 }
             );
         }
@@ -111,6 +122,9 @@ const store = new Vuex.Store({
         },
         LOG_IN(context, {email, password}) {
             context.commit('LOG_IN', {email, password});
+        },
+        SIGN_UP(context, {email, password}) {
+            context.commit('SIGN_UP', {email, password});
         }
     }
 })
