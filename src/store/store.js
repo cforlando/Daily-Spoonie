@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import Firebase from 'firebase';
+// import Admin from 'firebase-admin';
+import { db } from '../config/fbconfig';
 import router from '../router/router';
 
 Vue.use(Vuex);
@@ -50,6 +52,9 @@ const store = new Vuex.Store({
         },
         SET_DAY_FLAG(state, dayFlag) {
             state.dayFlag = dayFlag;
+        },
+        SET_SPOONS(state, spoons) {
+            state.spoons = spoons;
         },
         LOG_OUT () {
             Firebase.auth().signOut().then(
@@ -106,15 +111,21 @@ const store = new Vuex.Store({
         SET_USER_ID (context) {
             context.commit('SET_USER_ID');
         },
+        SET_SPOONS (context) {
+            context.commit('SET_SPOONS');
+        },
         SET_DISPLAY_NAME (context) {
             /* eslint-disable */
-            // let ref = Admin.database().ref().child("users");
-            // ref.on("value", (snapshot) => {
-            //     console.log(snapshot.val());
-            // }, (error) => {
-            //     console.log(error.code);
-            // });
-            // console.log(ref);
+            // const db = Admin.firestore();
+            db.collection('users').get()
+                .then((snapshot) => {
+                    snapshot.forEach((doc) => {
+                        console.log(doc.id, '=>', doc.data());
+                    });
+                })
+                .catch((err) => {
+                    console.log('Error getting docs', err);
+                });
             context.commit('SET_DISPLAY_NAME');
         },
         LOG_OUT (context) {
