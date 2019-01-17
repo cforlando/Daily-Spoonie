@@ -20,5 +20,6 @@ yarn-error.log*
 *.sln
 *.sw*
 
-# The proper config file (leave only the dummy)
+# The proper config files (leave only the dummies)
 fbconfig.js
+serviceAccount.json
