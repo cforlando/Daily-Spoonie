@@ -50,6 +50,9 @@ export default {
       decrementSpoons() {
           this.$store.dispatch('DECREMENT_SPOONS');
       },
+      setSpoons() {
+          this.$store.dispatch('SET_SPOONS');
+      },
       test() {
           this.$store.dispatch('SET_DISPLAY_NAME');
       },
@@ -57,7 +60,7 @@ export default {
           this.$router.push('/user/dashboard');
       },
       logOut() {
-        this.$store.dispatch('LOG_OUT');
+          this.$store.dispatch('LOG_OUT');
       }
   }
 }
