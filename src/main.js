@@ -3,15 +3,24 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Vuelidate from 'vuelidate'
 import Firebase from 'firebase'
+import Admin from 'firebase-admin';
 import BootstrapVue from 'bootstrap-vue'
 import VueRouter from 'vue-router';
-import { config } from './config/fbconfig.js'
-import App from './App.vue'
-import store from './store/store'
+import App from './App.vue';
+import store from './store/store';
+import serviceAccount from './config/serviceAccount.json';
+import { Firestore } from '@google-cloud/firestore';
+
 Vue.use(BootstrapVue);
 Vue.use(VueRouter);
 Vue.use(Vuelidate);
-Firebase.initializeApp(config);
+
+Admin.initializeApp({
+  credential: Admin.credential.cert(serviceAccount)
+})
+
+const firestore = new Firestore();
+firestore.settings({ timestampsInSnapshots: true });
 
 Vue.config.productionTip = false
 
